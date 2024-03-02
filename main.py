@@ -26,6 +26,9 @@ class NumberForCartForm(FlaskForm):
 @app.route('/')
 def main_page():
     # If there is no cart initialised for a session, create a shopping cart
+    if 'cart' not in session:
+        print("New session", flush = True) 
+        session['cart'] = []
     
     items = Item.query.all()       
     return render_template('index.html', len = len(items), items = items)
@@ -37,7 +40,10 @@ def single_product_page(itemId):
     
     form = NumberForCartForm()
     if form.validate_on_submit():
-        return render_template('SingleItemConfirmation.html', item = items[itemId], number_for_cart = form.number_for_cart.data)
+        # Add the items to cart if an item is added
+        for i in range(form.number_for_cart.data):
+            session['cart'] += [items[itemId]]
+        return render_template('SingleItemConfirmation.html', item = items[itemId], number_for_cart = form.number_for_cart.data, cart = session['cart'])
     else:
         return render_template('SingleItem.html', item = items[itemId], form = form)
 
