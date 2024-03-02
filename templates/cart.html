@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %} Cart {% endblock %}
+
+{% block content %}
+<div class="col-md-3">
+<ul>
+    <h3>Items in Cart:</h3>
+    {% for item in cart %}
+        <li>{{item}}</li>
+    {% endfor %}
+</ul>
+</div>
+{% endblock %}
