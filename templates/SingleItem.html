@@ -4,7 +4,7 @@
     <h1>{{ item.name }}</h1>
     <p>Price: £{{ item.price }}</p>
     <p>{{ item.description }}</p>
-    <img src="{{url_for('static', filename= items[i].image_name ) }}" alt= "{{ item.name }}" width="400"/>
+    <img src="{{url_for('static', filename= item.image_name ) }}" alt= "{{ item.name }}" width="400"/>
     <div class="col-md-3">
         {{ wtf.quick_form(form) }}
     </div>
