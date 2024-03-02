@@ -19,11 +19,11 @@ class NumberForCartForm(FlaskForm):
     submit = SubmitField('Submit')
 
 @app.route('/')
-def galleryPage():
+def main_page():
     return render_template('index.html', len = len(items), items = items)
 
 @app.route('/item/<int:itemId>', methods=['GET','POST'])
-def singleProductPage(itemId):
+def single_product_page(itemId):
     form = NumberForCartForm()
     if form.validate_on_submit():
         return render_template('SingleItemConfirmation.html', item = items[itemId], number_for_cart = form.number_for_cart.data)
