@@ -11,8 +11,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.sqlite3'
 bootstrap = Bootstrap(app)
 db = SQLAlchemy(app)
 
-class Item(db.Model):
-    __tablename__ = 'items'
+class Product(db.Model):
+    __tablename__ = 'products'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(40), index=True, unique=True)
     price = db.Column(db.Float)
@@ -38,23 +38,23 @@ def main_page():
         print("New session", flush = True) 
         session['cart'] = []
     
-    items = Item.query.all()
-    return render_template('index.html', len = len(items), items = items)
+    products = Product.query.all()
+    return render_template('index.html', len = len(products), products = products)
 
-@app.route('/item/<int:itemId>', methods=['GET','POST'])
-def single_product_page(itemId):
+@app.route('/product/<int:productId>', methods=['GET','POST'])
+def single_product_page(productId):
     
-    items = Item.query.all()  
+    products = Product.query.all()  
     
     form = CartForm(cart=1)
     
     if form.validate_on_submit():
-        # Add the items to cart if an item is added
-        session['cart'] += [f'{items[itemId].name} - £{items[itemId].price} - Quantity: {form.cart.data}']
+        # Add the products to cart if an product is added
+        session['cart'] += [f'{products[productId].name} - £{products[productId].price} - Quantity: {form.cart.data}']
         
-        return render_template('single_item_confirmation.html', item = items[itemId], number_for_cart = form.cart.data)
+        return render_template('single_product_confirmation.html', product = products[productId], number_for_cart = form.cart.data)
     else:
-        return render_template('single_item.html', item = items[itemId], form = form)
+        return render_template('single_product.html', product = products[productId], form = form)
     
 @app.route('/cart')
 def cart_page():

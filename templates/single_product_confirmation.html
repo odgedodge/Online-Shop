@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>{{ product.name }}</h1>
+    <p>Price: £{{ product.price }}</p>
+    <p>{{ product.description }}</p>
+    <p>Added to cart. <a href="{{ url_for('cart_page', productId = i)}}"> View Cart </a></p>
+    <img src="{{url_for('static', filename= product.image_name ) }}" alt= "{{ product.name }}" width="400"/>
+{% endblock %}
