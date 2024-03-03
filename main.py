@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, session
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, IntegerField
-from wtforms.validators import DataRequired, Length
+from wtforms.validators import DataRequired, Length, NumberRange
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 
@@ -28,7 +28,7 @@ class Item(db.Model):
                 "image_name": self.image_name}
 
 class CartForm(FlaskForm):
-    cart = IntegerField('Add to cart: ', validators = [DataRequired()])
+    cart = IntegerField('Add to cart: ', [DataRequired(), NumberRange(1)])
     submit = SubmitField('Submit')
 
 @app.route('/')
@@ -46,7 +46,8 @@ def single_product_page(itemId):
     
     items = Item.query.all()  
     
-    form = CartForm()
+    form = CartForm(cart=1)
+    
     if form.validate_on_submit():
         # Add the items to cart if an item is added
         session['cart'] += [f'{items[itemId].name} - £{items[itemId].price} - Quantity: {form.cart.data}']
@@ -61,8 +62,3 @@ def cart_page():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-"""<form method="post">
-    <input type="number" id="quantity" name="quantity" value = 1 required=""/>
-    <button type="submit">Add to Cart</button>
-</form>"""
