@@ -1,9 +1,0 @@
-{% extends "base.html" %}
-
-{% block content %}
-    <h1>{{ item.name }}</h1>
-    <p>Price: £{{ item.price }}</p>
-    <p>{{ item.description }}</p>
-    <p>Added to cart. <a href="{{ url_for('cart_page', itemId = i)}}"> View Cart </a></p>
-    <img src="{{url_for('static', filename= item.image_name ) }}" alt= "{{ item.name }}" width="400"/>
-{% endblock %}
