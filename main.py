@@ -18,9 +18,17 @@ class Item(db.Model):
     price = db.Column(db.Float)
     description = db.Column(db.Text)
     image_name = db.Column(db.String(60))
+    
+    # in order to display a products details
+    def serialise(self):
+        return {"id": self.id,
+                "name": self.name,
+                "price": self.price,
+                "description": self.description,
+                "image_name": self.image_name}
 
-class NumberForCartForm(FlaskForm):
-    number_for_cart = IntegerField('Add how many to cart: ', validators = [DataRequired()])
+class CartForm(FlaskForm):
+    cart = IntegerField('Add to cart: ', validators = [DataRequired()])
     submit = SubmitField('Submit')
 
 @app.route('/')
@@ -30,22 +38,31 @@ def main_page():
         print("New session", flush = True) 
         session['cart'] = []
     
-    items = Item.query.all()       
+    items = Item.query.all()
     return render_template('index.html', len = len(items), items = items)
 
 @app.route('/item/<int:itemId>', methods=['GET','POST'])
 def single_product_page(itemId):
     
-    items = Item.query.all()    
+    items = Item.query.all()  
     
-    form = NumberForCartForm()
+    form = CartForm()
     if form.validate_on_submit():
         # Add the items to cart if an item is added
-        for i in range(form.number_for_cart.data):
-            session['cart'] += [items[itemId]]
-        return render_template('SingleItemConfirmation.html', item = items[itemId], number_for_cart = form.number_for_cart.data, cart = session['cart'])
+        session['cart'] += [f'{items[itemId].name} - £{items[itemId].price} - Quantity: {form.cart.data}']
+        
+        return render_template('single_item_confirmation.html', item = items[itemId], number_for_cart = form.cart.data)
     else:
-        return render_template('SingleItem.html', item = items[itemId], form = form)
+        return render_template('single_item.html', item = items[itemId], form = form)
+    
+@app.route('/cart')
+def cart_page():
+    return render_template('cart.html', cart = session['cart'])
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+"""<form method="post">
+    <input type="number" id="quantity" name="quantity" value = 1 required=""/>
+    <button type="submit">Add to Cart</button>
+</form>"""
