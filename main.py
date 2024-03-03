@@ -39,7 +39,7 @@ def main_page():
         session['cart'] = []
     
     products = Product.query.all()
-    return render_template('index.html', len = len(products), products = products)
+    return render_template('main.html', len = len(products), products = products)
 
 @app.route('/product/<int:productId>', methods=['GET','POST'])
 def single_product_page(productId):
