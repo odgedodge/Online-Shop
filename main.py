@@ -48,8 +48,10 @@ def main_page():
         print("New session", flush = True) 
         session['cart'] = []
     
+    form = CartForm()
+    
     products = Product.query.all()
-    return render_template('main.html', len = len(products), products = products)
+    return render_template('main.html', len = len(products), products = products, form = form)
 
 @app.route('/product/<int:product_id>', methods=['GET','POST'])
 def single_product_page(product_id):

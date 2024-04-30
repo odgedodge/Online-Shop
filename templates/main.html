@@ -3,10 +3,21 @@
 {% block content %}
     <h1>Online Shop</h1>
     <ul>
-        {% for i in range(0, len) %}
-            <a href="{{ url_for('single_product_page', product_id = i)}}">
-                <img src="{{url_for('static', filename= products[i].image_name ) }}" alt= "{{ products[i].name }}" width="300"/>
-            </a>
-            <li><a href="{{ url_for('single_product_page', product_id = i)}}">{{ products[i].name }}</a> - £{{ products[i].price }} - {{ products[i].description }}</li>
+        {% for product in products %}
+            <div class="product">
+                <a href="{{ url_for('single_product_page', product_id=product.id)}}">
+                    <img src="{{url_for('static', filename= product.image_name ) }}" alt= "{{ product.name }}" width="300"/>
+                </a>
+                <div class="product-info">
+                    <h3>{{ product.name }}</h3>
+                    <p>Price: £{{ product.price }}</p>
+                    <p>{{ product.description }}</p>
+                    <form action="{{ url_for('single_product_page', product_id=product.id) }}" method="POST">
+                        {{ form.csrf_token }}
+                        <input type="hidden" name="cart" value="1">
+                        <button type="submit" class="btn btn-primary">Add to Cart</button>
+                    </form>
+                </div>
+            </div>
         {% endfor %}
 {% endblock %}
