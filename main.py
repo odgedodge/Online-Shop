@@ -92,12 +92,23 @@ def remove_from_cart():
         if 'cart' in session:
             del session['cart'][index]
             session.modified = True
-        # Redirect to the cart page after item removal
         return redirect(url_for('cart_page'))
     except Exception as e:
-        # Handle any errors that occur during item removal
         print(f"Error removing item from cart: {e}")
-        # Redirect to the cart page with an error message, if needed
+        return redirect(url_for('cart_page'))
+
+@app.route('/reduce_quantity', methods=['POST'])
+def reduce_quantity():
+    try:
+        index = int(request.form['index'])
+        if 'cart' in session:
+            session['cart'][index]['quantity'] -= 1
+            if session['cart'][index]['quantity'] <= 0:
+                del session['cart'][index]
+            session.modified = True
+        return redirect(url_for('cart_page'))
+    except Exception as e:
+        print(f"Error reducing quantity: {e}")
         return redirect(url_for('cart_page'))
 
 if __name__ == '__main__':

@@ -17,6 +17,10 @@
                         <input type="hidden" name="index" value="{{ loop.index0 }}">
                         <button type="submit" class="btn btn-danger btn-sm">Remove</button>
                     </form>
+                    <form action="{{ url_for('reduce_quantity') }}" method="POST" style="display: inline;">
+                        <input type="hidden" name="index" value="{{ loop.index0 }}">
+                        <button type="submit" class="btn btn-warning btn-sm">Reduce Quantity</button>
+                    </form>
                 </li>
             {% endfor %}
         </ul>
