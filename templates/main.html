@@ -9,23 +9,53 @@
             <button type="submit" name="sort_by" value="environmental_rating" class="btn btn-primary">Sort by Environmental Rating</button>
         </form>
     </div>
+    <div id="description-container"></div> <!-- Container for displaying the item description -->
     <ul>
         {% for product in products %}
             <div class="product">
-                <a href="{{ url_for('single_product_page', product_id=product.id)}}">
-                    <img src="{{url_for('static', filename= product.image_name ) }}" alt= "{{ product.name }}" width="300"/>
+                <a href="{{ url_for('single_product_page', product_id=product.id)}}" class="product-link" data-product-id="{{ product.id }}">
+                    <img src="{{ url_for('static', filename= product.image_name ) }}" alt="{{ product.name }}" width="300"/>
                 </a>
                 <div class="product-info">
-                    <h3><a href="{{ url_for('single_product_page', product_id=product.id)}}">{{ product.name }}</a></h3>
+                    <h3><a href="{{ url_for('single_product_page', product_id=product.id)}}" class="product-link" data-product-id="{{ product.id }}">{{ product.name }}</a></h3>
                     <p>Price: £{{ product.price }}</p>
-                    <p>{{ product.description }}</p>
-                    <p>Environmental Rating: {{ product.environmental_rating }}</p>
-                    <form action="{{ url_for('single_product_page', product_id=product.id) }}" method="POST">
-                        {{ form.csrf_token }}
-                        <input type="number" name="cart" value="1" min="1">
-                        <button type="submit" class="btn btn-primary">Add to Cart</button>
-                    </form>
                 </div>
             </div>
         {% endfor %}
+    </ul>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const productLinks = document.querySelectorAll('.product-link');
+
+            productLinks.forEach(link => {
+                link.addEventListener('mouseover', async (event) => {
+                    const productId = event.target.dataset.productId;
+                    descriptionContainer = document.getElementById('description-container');
+
+                    // Make AJAX request to fetch description
+                    const response = await fetch(`/get_description/${productId}`);
+                    const data = await response.json();
+
+                    // Display description in floating container
+                    descriptionContainer.innerHTML = data.description;
+
+                    // Position description container relative to mouse pointer
+                    descriptionContainer.style.left = event.pageX + 'px';
+                    descriptionContainer.style.top = event.pageY + 'px';
+
+                    // Make description container visible
+                    descriptionContainer.style.visibility = 'visible';
+                });
+
+                link.addEventListener('mouseout', () => {
+                    // Clear description when mouse leaves the item
+                    descriptionContainer.innerHTML = '';
+                    descriptionContainer.style.visibility = 'hidden';
+                });
+            });
+        });
+    </script>
+            
+        
 {% endblock %}

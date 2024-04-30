@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request, session
+from flask import Flask, render_template, redirect, url_for, jsonify, request, session
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, IntegerField
 from wtforms.validators import DataRequired, Length, NumberRange, ValidationError, Regexp
@@ -71,6 +71,12 @@ def main_page():
     form = CartForm()
     
     return render_template('main.html', len = len(products), products = products, form = form)
+
+@app.route('/get_description/<int:product_id>')
+def get_description(product_id):
+    # Retrieve the product description from the database or wherever it's stored
+    product = Product.query.get_or_404(product_id)
+    return jsonify({'description': product.description})
 
 @app.route('/product/<int:product_id>', methods=['GET','POST'])
 def single_product_page(product_id):
