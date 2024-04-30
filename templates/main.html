@@ -2,6 +2,13 @@
     
 {% block content %}
     <h1>Online Shop</h1>
+    <div class="sort-options">
+        <form action="{{ url_for('main_page') }}" method="GET">
+            <button type="submit" name="sort_by" value="name" class="btn btn-primary">Sort by Name</button>
+            <button type="submit" name="sort_by" value="price" class="btn btn-primary">Sort by Price</button>
+            <button type="submit" name="sort_by" value="environmental_rating" class="btn btn-primary">Sort by Environmental Rating</button>
+        </form>
+    </div>
     <ul>
         {% for product in products %}
             <div class="product">
@@ -12,6 +19,7 @@
                     <h3>{{ product.name }}</h3>
                     <p>Price: £{{ product.price }}</p>
                     <p>{{ product.description }}</p>
+                    <p>Environmental Rating: {{ product.environmental_rating }}</p>
                     <form action="{{ url_for('single_product_page', product_id=product.id) }}" method="POST">
                         {{ form.csrf_token }}
                         <input type="number" name="cart" value="1" min="1">
