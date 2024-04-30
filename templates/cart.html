@@ -26,6 +26,10 @@
         </ul>
         <p>Total Cost: £{{ total_cost }}</p>
         <a href="{{ url_for('checkout_page') }}" class="btn btn-primary">Checkout</a>
+        <!-- Button to clear cart -->
+        <form action="{{ url_for('clear_cart') }}" method="post">
+            <button type="submit" class="btn btn-danger">Clear Cart</button>
+        </form>
     {% else %}
         <p>Your cart is empty.</p>
     {% endif %} 

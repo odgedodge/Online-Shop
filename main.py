@@ -108,6 +108,12 @@ def cart_page():
             products_in_cart.append({"product": product, "quantity": item["quantity"]})
     return render_template('cart.html', cart=products_in_cart, total_cost = total_cost)
 
+@app.route('/clear_cart', methods=['POST'])
+def clear_cart():
+    session.pop('cart', None)
+    session['cart'] = []
+    return redirect(url_for('cart_page'))
+
 @app.route('/remove_from_cart', methods=['POST'])
 def remove_from_cart():
     index = int(request.form['index'])
