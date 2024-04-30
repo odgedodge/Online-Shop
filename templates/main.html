@@ -14,7 +14,7 @@
                     <p>{{ product.description }}</p>
                     <form action="{{ url_for('single_product_page', product_id=product.id) }}" method="POST">
                         {{ form.csrf_token }}
-                        <input type="hidden" name="cart" value="1">
+                        <input type="number" name="cart" value="1" min="1">
                         <button type="submit" class="btn btn-primary">Add to Cart</button>
                     </form>
                 </div>
