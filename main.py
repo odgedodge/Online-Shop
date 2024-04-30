@@ -1,9 +1,10 @@
 from flask import Flask, render_template, redirect, url_for, request, session
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, IntegerField
-from wtforms.validators import DataRequired, Length, NumberRange
+from wtforms.validators import DataRequired, Length, NumberRange, ValidationError, Regexp
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
+import re
 
 products = [
     { "name": "Singer Sewing Machine M2105", "price": 149.99, "description": "Lightweight, beginner sewing machine with one dial operation and 4 step buttonhole stitching.", "image_filename" : "SingerM1205SewingMachine.jpg", "environmental_rating": "6/10","environmental_description": "Sewing machines have environmental impacts as electronic devices, in that they do use electricity, as well as them adding to e-waste if not disposed of correctly. They are also made of plastics and polymers, so they should be disposed of with the proper care. However, moving to making your own clothes for yourself or friends is far better than participating in fast fashion, as well as being."},
@@ -11,7 +12,6 @@ products = [
     { "name": "Fabric Scissors", "price": 15.99, "description": '8" Heavy duty, sharp scissors with a case.', "image_filename" : "Scissors.jpg" , "environmental_rating": "8/10", "environmental_description": "These scissors should last a long time, which is why we give a 10-year warranty for repairs. Look to sharpen these before seeking a replacement, and when disposing keep note of local metal and sharp handling policies. The making of these use a large amount of energy and water, so it is in the best interest of the environment to keep them functioning through repair and sharpening rather than to replace them. Make sure to only use this on fabric for best longevity – use on paper can cause bluntness."},
     { "name": "Simplicity Vintage Jiffy Dress Sewing Pattern S9594", "price": 10.99, "description": "Vintage dress sewing pattern. For sizes 6 -14. ", "image_filename" : "simplicity-sewing-pattern-s9594-jiffy-dress.webp", "environmental_rating": "9/10", "environmental_description": "Sewing patterns are made from paper, usually thin, tissue paper, as the Simplicity Vintage Jiffy Dress Sewing Papper S9594 is. This has a low environmental impact, however mass production of paper can cause issues with deforestation, so when disposing of this item make sure to recycle appropriately. Making your own clothes can also be beneficial for the environment, as we move into a period where fast fashion is more criticised for its negative environmental impact. "}
 ]
-
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "top secret password don't tell anyone this"
@@ -41,6 +41,14 @@ class Product(db.Model):
 class CartForm(FlaskForm):
     cart = IntegerField('Quantity: ', [DataRequired(), NumberRange(min=1)], render_kw={"type": "number", "min": "1"})
     submit = SubmitField('Add to Cart')
+    
+class CheckoutForm(FlaskForm):  
+    first_name = StringField('First Name', validators=[DataRequired(), Length(min=2, max=50)])
+    last_name = StringField('Last Name', validators=[DataRequired(), Length(min=2, max=50)])
+    card_number = StringField('Card Number', validators=[DataRequired(), Length(min=16, max=19, message='Invalid card number length'), Regexp(r'^(\d{4})([\s-])?(\d{4})\2?(\d{4})\2?(\d{4})$')])
+    expiration_date = StringField('Expiration Date', validators=[DataRequired()])
+    cvv = StringField('CVV', validators=[DataRequired(), Length(min=3, max=3)])
+    submit = SubmitField('Submit')
 
 @app.route('/')
 def main_page():
@@ -84,8 +92,7 @@ def single_product_page(product_id):
         # Explicitly update the session object
         session.modified = True
         return render_template('single_product_confirmation.html', product=product, quantity=quantity)
-    else:
-        return render_template('single_product.html', product=product, form=form)
+    return render_template('single_product.html', product=product, form=form)
     
 @app.route('/cart')
 def cart_page():
@@ -100,10 +107,6 @@ def cart_page():
         if product:
             products_in_cart.append({"product": product, "quantity": item["quantity"]})
     return render_template('cart.html', cart=products_in_cart, total_cost = total_cost)
-
-@app.route('/checkout')
-def checkout_page():
-    return render_template('checkout.html')
 
 @app.route('/remove_from_cart', methods=['POST'])
 def remove_from_cart():
@@ -122,6 +125,17 @@ def reduce_quantity():
             del session['cart'][index]
         session.modified = True
     return redirect(url_for('cart_page'))
+
+@app.route('/checkout', methods=['GET', 'POST'])
+def checkout_page():
+    form = CheckoutForm()
+    if form.validate_on_submit():
+        return render_template('checkout_complete.html')
+    return render_template('checkout.html', form=form)
+
+@app.route('/process_payment', methods=['POST'])
+def process_payment():
+    return render_template('checkout_complete.html')
 
 def calculate_total_cost(cart, products):
     total_cost = 0
