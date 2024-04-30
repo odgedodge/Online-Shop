@@ -18,3 +18,9 @@
         </div>
     </nav>
 {% endblock %}
+
+{% block head %}
+    {{ super() }}
+    <!-- Import custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='custom.css') }}">
+{% endblock %}
