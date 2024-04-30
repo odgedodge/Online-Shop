@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, redirect, url_for, request, session
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, IntegerField
 from wtforms.validators import DataRequired, Length, NumberRange
@@ -38,8 +38,7 @@ class Product(db.Model):
                 "environmental_impact": self.environmental_impact}
 
 class CartForm(FlaskForm):
-    cart = IntegerField('Quantity: ', [DataRequired(), NumberRange(min=1)], 
-                        render_kw={"type": "number", "min": "1"})
+    cart = IntegerField('Quantity: ', [DataRequired(), NumberRange(min=1)], render_kw={"type": "number", "min": "1"})
     submit = SubmitField('Add to Cart')
 
 @app.route('/')
@@ -85,6 +84,21 @@ def cart_page():
         if product:
             products_in_cart.append({"product": product, "quantity": item["quantity"]})
     return render_template('cart.html', cart=products_in_cart)
+
+@app.route('/remove_from_cart', methods=['POST'])
+def remove_from_cart():
+    try:
+        index = int(request.form['index'])
+        if 'cart' in session:
+            del session['cart'][index]
+            session.modified = True
+        # Redirect to the cart page after item removal
+        return redirect(url_for('cart_page'))
+    except Exception as e:
+        # Handle any errors that occur during item removal
+        print(f"Error removing item from cart: {e}")
+        # Redirect to the cart page with an error message, if needed
+        return redirect(url_for('cart_page'))
 
 if __name__ == '__main__':
 

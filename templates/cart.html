@@ -4,15 +4,24 @@
 {% block title %} Cart {% endblock %}
 
 {% block content %}
-<div class="col-md-3">
-    <ul>
-        {% for item in cart %}
-            <li>
-                <strong>{{ item.product.name }}</strong> - 
-                £{{ item.product.price }} - 
-                Quantity: {{ item.quantity }}
-            </li>
-        {% endfor %}
-    </ul>
+<div class="container">
+    {%if cart %}
+        <h3>Products in Cart:</h3>
+        <ul class="list-unstyled">
+            {% for item in cart %}
+                <li class="mb-3">
+                    <strong>{{ item.product.name }}</strong> - 
+                    £{{ item.product.price }} - 
+                    Quantity: {{ item.quantity }}
+                    <form action="{{ url_for('remove_from_cart') }}" method="POST" style="display: inline;">
+                        <input type="hidden" name="index" value="{{ loop.index0 }}">
+                        <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Your cart is empty.</p>
+    {% endif %} 
 </div>
 {% endblock %}
