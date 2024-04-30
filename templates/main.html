@@ -4,7 +4,9 @@
     <h1>Online Shop</h1>
     <ul>
         {% for i in range(0, len) %}
-            <img src="{{url_for('static', filename= products[i].image_name ) }}" alt= "{{ products[i].name }}" width="300"/>
+            <a href="{{ url_for('single_product_page', productId = i)}}">
+                <img src="{{url_for('static', filename= products[i].image_name ) }}" alt= "{{ products[i].name }}" width="300"/>
+            </a>
             <li><a href="{{ url_for('single_product_page', productId = i)}}">{{ products[i].name }}</a> - £{{ products[i].price }} - {{ products[i].description }}</li>
         {% endfor %}
 {% endblock %}
