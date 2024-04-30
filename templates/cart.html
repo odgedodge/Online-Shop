@@ -5,11 +5,14 @@
 
 {% block content %}
 <div class="col-md-3">
-<ul>
-    <h3>Products in Cart:</h3>
-    {% for product in cart %}
-        <li>{{product}}</li>
-    {% endfor %}
-</ul>
+    <ul>
+        {% for item in cart %}
+            <li>
+                <strong>{{ item.product.name }}</strong> - 
+                £{{ item.product.price }} - 
+                Quantity: {{ item.quantity }}
+            </li>
+        {% endfor %}
+    </ul>
 </div>
 {% endblock %}
