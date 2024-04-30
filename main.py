@@ -77,39 +77,40 @@ def single_product_page(product_id):
 @app.route('/cart')
 def cart_page():
     cart = session.get('cart', [])
+    print(cart)
+    total_cost = calculate_total_cost(session['cart'], products)
+    
     products_in_cart = []
     for item in cart:
         product_id = item["product_id"]
         product = Product.query.get(product_id)
         if product:
             products_in_cart.append({"product": product, "quantity": item["quantity"]})
-    return render_template('cart.html', cart=products_in_cart)
+    return render_template('cart.html', cart=products_in_cart, total_cost = total_cost)
 
 @app.route('/remove_from_cart', methods=['POST'])
 def remove_from_cart():
-    try:
-        index = int(request.form['index'])
-        if 'cart' in session:
-            del session['cart'][index]
-            session.modified = True
-        return redirect(url_for('cart_page'))
-    except Exception as e:
-        print(f"Error removing item from cart: {e}")
-        return redirect(url_for('cart_page'))
+    index = int(request.form['index'])
+    if 'cart' in session:
+        del session['cart'][index]
+        session.modified = True
+    return redirect(url_for('cart_page'))
 
 @app.route('/reduce_quantity', methods=['POST'])
 def reduce_quantity():
-    try:
-        index = int(request.form['index'])
-        if 'cart' in session:
-            session['cart'][index]['quantity'] -= 1
-            if session['cart'][index]['quantity'] <= 0:
-                del session['cart'][index]
-            session.modified = True
-        return redirect(url_for('cart_page'))
-    except Exception as e:
-        print(f"Error reducing quantity: {e}")
-        return redirect(url_for('cart_page'))
+    index = int(request.form['index'])
+    if 'cart' in session:
+        session['cart'][index]['quantity'] -= 1
+        if session['cart'][index]['quantity'] <= 0:
+            del session['cart'][index]
+        session.modified = True
+    return redirect(url_for('cart_page'))
+
+def calculate_total_cost(cart, products):
+    total_cost = 0
+    for item in cart:
+        total_cost += products[item['product_id']]["price"] * item['quantity']
+    return total_cost
 
 if __name__ == '__main__':
 
