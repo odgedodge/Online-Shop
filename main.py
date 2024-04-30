@@ -88,6 +88,10 @@ def cart_page():
             products_in_cart.append({"product": product, "quantity": item["quantity"]})
     return render_template('cart.html', cart=products_in_cart, total_cost = total_cost)
 
+@app.route('/checkout')
+def checkout_page():
+    return render_template('checkout.html')
+
 @app.route('/remove_from_cart', methods=['POST'])
 def remove_from_cart():
     index = int(request.form['index'])
