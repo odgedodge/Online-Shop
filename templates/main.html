@@ -1,33 +1,39 @@
 {% extends "base.html" %}
     
 {% block content %}
-    <h1>Online Shop</h1>
     <div class="sort-options">
         <form action="{{ url_for('main_page') }}" method="GET">
-            <button type="submit" name="sort_by" value="name" class="btn btn-primary">Sort by Name</button>
-            <button type="submit" name="sort_by" value="price" class="btn btn-primary">Sort by Price</button>
-            <button type="submit" name="sort_by" value="environmental_rating" class="btn btn-primary">Sort by Environmental Rating</button>
+            <button type="submit" name="sort_by" value="name" class="sort-btn">Sort by Name</button>
+            <button type="submit" name="sort_by" value="environmental_rating" class="sort-btn">Sort by Environmental Rating</button>
+            <button type="submit" name="sort_by" value="price" class="sort-btn">Sort by Price</button>
+            
         </form>
     </div>
     <div id="description-container"></div> <!-- Container for displaying the item description -->
-    <ul>
+    <ul class="product-list">
         {% for product in products %}
-            <div class="product">
+            <li class="product">
                 <a href="{{ url_for('single_product_page', product_id=product.id)}}" class="product-link" data-product-id="{{ product.id }}">
                     <img src="{{ url_for('static', filename= product.image_name ) }}" alt="{{ product.name }}" width="300"/>
                 </a>
+
+
                 <div class="product-info">
                     <h3><a href="{{ url_for('single_product_page', product_id=product.id)}}" class="product-link" data-product-id="{{ product.id }}">{{ product.name }}</a></h3>
-                    <p>Price: £{{ product.price }}</p>
+                    <p class="product-price">Price: £{{ product.price }}</p>
+                    <p> Environmental Rating: {{product.environmental_rating}}</p>
                 </div>
-                <form action="{{ url_for('single_product_page', product_id=product.id) }}" method="POST">
+
+
+                <form action="{{ url_for('single_product_page', product_id=product.id) }}" method="POST" class="product-form">
                     {{ form.csrf_token }}
-                    <input type="number" name="cart" value="1" min="1">
-                    <button type="submit" class="btn btn-primary">Add to Cart</button>
+                    <input type="number" name="cart" value="1" min="1" class="product-quantity">
+                    <button type="submit" class="submit-btn product-btn">Add to Cart</button>
                 </form>
-            </div>
+            </li>
         {% endfor %}
     </ul>
+    
     
     <script>
         document.addEventListener('DOMContentLoaded', () => {

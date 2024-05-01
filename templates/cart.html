@@ -4,32 +4,32 @@
 {% block title %} Cart {% endblock %}
 
 {% block content %}
-<div class="container">
+    <h3 class="header">Products in Cart:</h3>
     {%if cart %}
-        <h3>Products in Cart:</h3>
-        <ul class="list-unstyled">
+        <ul>
             {% for item in cart %}
-                <li class="mb-3">
-                    <strong>{{ item.product.name }}</strong> - 
-                    £{{ item.product.price }} - 
-                    Quantity: {{ item.quantity }}
-                    <form action="{{ url_for('remove_from_cart') }}" method="POST" style="display: inline;">
-                        <input type="hidden" name="index" value="{{ loop.index0 }}">
-                        <button type="submit" class="btn btn-danger btn-sm">Remove</button>
-                    </form>
-                    <form action="{{ url_for('reduce_quantity') }}" method="POST" style="display: inline;">
-                        <input type="hidden" name="index" value="{{ loop.index0 }}">
-                        <button type="submit" class="btn btn-warning btn-sm">Reduce Quantity</button>
-                    </form>
-                </li>
+            <li class="cart-item">
+                <strong>{{ item.product.name }}</strong> - £{{ item.product.price }} - Quantity: {{ item.quantity }}
+                <form action="{{ url_for('remove_from_cart') }}" method="POST">
+                    <input type="hidden" name="index" value="{{ loop.index0 }}">
+                    <button type="submit" class="cart-button" style="background-color: #445128; border: 1px solid #2D2A2C;">Remove</button>
+                </form>
+                <form action="{{ url_for('reduce_quantity') }}" method="POST">
+                    <input type="hidden" name="index" value="{{ loop.index0 }}">
+                    <button type="submit" class="cart-button">Reduce Quantity</button>
+                </form>
+            </li>
             {% endfor %}
         </ul>
-        <p>Total Cost: £{{ total_cost }}</p>
-        <a href="{{ url_for('checkout_page') }}" class="btn btn-primary">Checkout</a>
-        <!-- Button to clear cart -->
-        <form action="{{ url_for('clear_cart') }}" method="post">
-            <button type="submit" class="btn btn-danger">Clear Cart</button>
-        </form>
+        <p class="cart-total">Total Cost: £{{ total_cost }}</p>
+        <div class="cart-buttons">
+            <a href="{{ url_for('checkout_page') }}" class="submit-btn">Checkout</a>
+
+            <!-- Button to clear cart -->
+            <form action="{{ url_for('clear_cart') }}" method="post">
+                <button type="submit" class="clear-button">Clear Cart</button>
+            </form>
+        </div>
     {% else %}
         <p>Your cart is empty.</p>
     {% endif %} 
