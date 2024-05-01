@@ -7,7 +7,9 @@
 
 {% block navbar %}
 <nav class="navbar">
-    <img src="{{ url_for('static', filename='banner_full_logo.png') }}" alt="Logo" class="navbar-logo">
+    <a href="{{ url_for('main_page') }}">
+        <img src="{{ url_for('static', filename='banner_full_logo.png') }}" alt="Logo" class="navbar-logo">
+    </a>
     <div class="navbar-items">
         <a href="{{ url_for('main_page') }}" class="nav-link">All Products</a>
         <a href="{{ url_for('cart_page') }}" class="nav-link">Cart</a>
