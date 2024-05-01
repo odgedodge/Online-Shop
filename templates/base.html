@@ -6,17 +6,14 @@
 {% endblock %}
 
 {% block navbar %}
-    <nav class="navbar navbar-inverse">
-        <div class="container">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="{{ url_for('main_page') }}">ODGE CRAFT SUPPLIES</a>
-            </div>
-            <ul class="nav navbar-nav">
-                <li><a href="{{ url_for('main_page') }}">All Products</a></li>
-                <li><a href="{{ url_for('cart_page') }}">Cart</a></li>
-            </ul>
-        </div>
-    </nav>
+<nav class="navbar">
+    <img src="{{ url_for('static', filename='banner_full_logo.png') }}" alt="Logo" class="navbar-logo">
+    <div class="navbar-items">
+        <a href="{{ url_for('main_page') }}" class="nav-link">All Products</a>
+        <a href="{{ url_for('cart_page') }}" class="nav-link">Cart</a>
+        <!-- Add more navbar links as needed -->
+    </div>
+</nav>
 {% endblock %}
 
 {% block head %}

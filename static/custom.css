@@ -1,6 +1,175 @@
-.container {
-    width: 100%;
+
+/* General styling */
+body {
+    font-family: "Candara", serif;
+    background-color: #FEFAE0;
+    color: #2D2A2C;
+    font-size: 150%;
+    padding: 15px;
 }
+
+a {
+    color: #283618;
+}
+
+a:hover {
+    color: #606C38;
+}
+
+.container {
+    width: 90%;
+    margin: auto;
+}
+
+/* Header styling */
+.header {
+    background-color: #606C38;
+    padding: 20px;
+    text-align: center;
+    color: #FEFAE0;
+}
+
+.header h1 {
+    margin: 0;
+}
+
+/* Navigation styling */
+.navbar {
+    display: flex;
+    justify-content: left; 
+    align-items: center;
+    background-color: #606C38;
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+
+.navbar-items {
+    display: flex;
+    justify-content: center; /* Center navbar items horizontally */
+    align-items: center; /* Center items vertically within the navbar */
+}
+
+.nav-link {
+    color: #FEFAE0; /* Text color for navbar links */
+    text-decoration: none;
+    font-family: "Candara", sans-serif;
+    padding: 10px 15px; /* Adjust padding as needed */
+}
+
+.nav-link:hover {
+    background-color: #283618; /* Background color on hover */
+    border-radius: 5px; /* Add rounded edges */
+}
+
+.custom-btn {
+    background-color: #606C38;
+    color: #FEFAE0;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 5px; /* Add some spacing between buttons */
+}
+
+.custom-btn:hover {
+    background-color: #283618;
+}
+
+/* Main page styling */
+
+.sort-options {
+    margin-left: 30px;
+    padding: 15px 5px;
+}
+
+/* Product card styling */
+.product {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.product img {
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+.product-info {
+    text-align: left;
+}
+
+.product-info h3 {
+    margin-top: 10px;
+    color: #FEFAE0;
+}
+
+.product-info p {
+    color: #BC6C25;
+}
+
+/* Cart styling */
+.cart-item {
+    padding: 10px;
+    background-color: #FEFAE0;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.cart-item p {
+    margin: 5px 0;
+}
+
+.cart-total {
+    font-weight: bold;
+}
+
+.cart-buttons {
+    margin-top: 20px;
+}
+
+/* Checkout form styling */
+.checkout-form {
+    background-color: #FEFAE0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.checkout-form input[type="text"],
+.checkout-form input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #DDA15E;
+    border-radius: 5px;
+}
+
+.checkout-form input[type="submit"] {
+    background-color: #BC6C25;
+    color: #FEFAE0;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.checkout-form input[type="submit"]:hover {
+    background-color: #606C38;
+}
+
+/* Footer styling */
+.footer {
+    background-color: #606C38;
+    padding: 20px;
+    text-align: center;
+    color: #FEFAE0;
+}
+
 
 #description-container {
     visibility: hidden;
@@ -9,6 +178,6 @@
     left: 0;
     background-color: white;
     border: 1px solid black;
-    padding: 10px;
+    padding: 20px;
     z-index: 9999; /* Ensure it appears above other content */
 }
