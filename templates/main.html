@@ -20,6 +20,11 @@
                     <h3><a href="{{ url_for('single_product_page', product_id=product.id)}}" class="product-link" data-product-id="{{ product.id }}">{{ product.name }}</a></h3>
                     <p>Price: £{{ product.price }}</p>
                 </div>
+                <form action="{{ url_for('single_product_page', product_id=product.id) }}" method="POST">
+                    {{ form.csrf_token }}
+                    <input type="number" name="cart" value="1" min="1">
+                    <button type="submit" class="btn btn-primary">Add to Cart</button>
+                </form>
             </div>
         {% endfor %}
     </ul>
