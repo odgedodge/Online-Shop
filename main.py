@@ -122,7 +122,7 @@ def clear_cart():
 
 @app.route('/remove_from_cart', methods=['POST'])
 def remove_from_cart():
-    index = int(request.form['index'])
+    index = int(request.form['product_id'])
     if 'cart' in session:
         del session['cart'][index]
         session.modified = True
@@ -130,7 +130,7 @@ def remove_from_cart():
 
 @app.route('/reduce_quantity', methods=['POST'])
 def reduce_quantity():
-    index = int(request.form['index'])
+    index = int(request.form['product_id'])
     if 'cart' in session:
         session['cart'][index]['quantity'] -= 1
         if session['cart'][index]['quantity'] <= 0:

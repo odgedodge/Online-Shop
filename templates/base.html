@@ -13,13 +13,11 @@
     <div class="navbar-items">
         <a href="{{ url_for('main_page') }}" class="nav-link">All Products</a>
         <a href="{{ url_for('cart_page') }}" class="nav-link">Cart</a>
-        <!-- Add more navbar links as needed -->
     </div>
 </nav>
 {% endblock %}
 
 {% block head %}
     {{ super() }}
-    <!-- Import custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='custom.css') }}">
 {% endblock %}

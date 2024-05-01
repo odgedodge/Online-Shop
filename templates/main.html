@@ -9,15 +9,13 @@
             
         </form>
     </div>
-    <div id="description-container"></div> <!-- Container for displaying the item description -->
-    <ul class="product-list">
+    <div id="description-container"></div> 
+    <ul>
         {% for product in products %}
             <li class="product">
-                <a href="{{ url_for('single_product_page', product_id=product.id)}}" class="product-link" data-product-id="{{ product.id }}">
+                <a href="{{ url_for('single_product_page', product_id = product.id)}}" class="product-link" data-product-id="{{ product.id }}">
                     <img src="{{ url_for('static', filename= product.image_name ) }}" alt="{{ product.name }}" width="300"/>
                 </a>
-
-
                 <div class="product-info">
                     <h3><a href="{{ url_for('single_product_page', product_id=product.id)}}" class="product-link" data-product-id="{{ product.id }}">{{ product.name }}</a></h3>
                     <p class="product-price">Price: £{{ product.price }}</p>
@@ -25,10 +23,10 @@
                 </div>
 
 
-                <form action="{{ url_for('single_product_page', product_id=product.id) }}" method="POST" class="product-form">
+                <form action="{{ url_for('single_product_page', product_id=product.id) }}" method="POST">
                     {{ form.csrf_token }}
-                    <input type="number" name="cart" value="1" min="1" class="product-quantity">
-                    <button type="submit" class="submit-btn product-btn">Add to Cart</button>
+                    <input type="number" name="cart" value="1" min="1">
+                    <button type="submit" class="submit-btn">Add to Cart</button>
                 </form>
             </li>
         {% endfor %}
@@ -37,32 +35,32 @@
     
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const productLinks = document.querySelectorAll('.product-link');
+            product_links = document.querySelectorAll('.product-link');
 
-            productLinks.forEach(link => {
+            product_links.forEach(link => {
                 link.addEventListener('mouseover', async (event) => {
                     const productId = event.target.dataset.productId;
-                    descriptionContainer = document.getElementById('description-container');
+                    description_container = document.getElementById('description-container');
 
                     // Make AJAX request to fetch description
                     const response = await fetch(`/get_description/${productId}`);
                     const data = await response.json();
 
-                    // Display description in floating container
-                    descriptionContainer.innerHTML = data.description;
+                    // Display description
+                    description_container.innerHTML = data.description;
 
-                    // Position description container relative to mouse pointer
-                    descriptionContainer.style.left = event.pageX + 'px';
-                    descriptionContainer.style.top = event.pageY + 'px';
+                    // Position description on mouse pointer
+                    description_container.style.left = event.pageX + 'px';
+                    description_container.style.top = event.pageY + 'px';
 
                     // Make description container visible
-                    descriptionContainer.style.visibility = 'visible';
+                    description_container.style.visibility = 'visible';
                 });
 
                 link.addEventListener('mouseout', () => {
                     // Clear description when mouse leaves the item
-                    descriptionContainer.innerHTML = '';
-                    descriptionContainer.style.visibility = 'hidden';
+                    description_container.innerHTML = '';
+                    description_container.style.visibility = 'hidden';
                 });
             });
         });

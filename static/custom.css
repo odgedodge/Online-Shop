@@ -16,6 +16,13 @@ a {
     color: #283618;
 }
 
+.item-img {
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
 a:hover {
     color: #606C38;
 }
@@ -88,6 +95,17 @@ a:hover {
 
 .sort-btn:hover {
     background-color: #DDA15E;
+}
+
+#description-container {
+    visibility: hidden;
+    position: absolute;
+    background-color: #FEFAE0;
+    border: 1px solid black;
+    padding: 20px;
+    z-index: 9999; /* Appears above other content */
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Product card styling */
@@ -207,14 +225,3 @@ a:hover {
     color: #FEFAE0;
 }
 
-
-#description-container {
-    visibility: hidden;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: white;
-    border: 1px solid black;
-    padding: 20px;
-    z-index: 9999; /* Ensure it appears above other content */
-}
