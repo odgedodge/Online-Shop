@@ -4,7 +4,7 @@ from wtforms import StringField, SubmitField, IntegerField
 from wtforms.validators import DataRequired, Length, NumberRange, ValidationError, Regexp
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
-import re
+from datetime import datetime
 
 products = [
     { "name": "Singer Sewing Machine M2105", "price": 149.99, "description": "Lightweight, beginner sewing machine with one dial operation and 4 step buttonhole stitching.", "image_filename" : "SingerM1205SewingMachine.jpg", "environmental_rating": "6/10","environmental_description": "Sewing machines have environmental impacts as electronic devices, in that they do use electricity, as well as them adding to e-waste if not disposed of correctly. They are also made of plastics and polymers, so they should be disposed of with the proper care. However, moving to making your own clothes for yourself or friends is far better than participating in fast fashion, as well as being."},
@@ -45,10 +45,34 @@ class CartForm(FlaskForm):
 class CheckoutForm(FlaskForm):  
     first_name = StringField('First Name', validators=[DataRequired(), Length(min=2, max=50)])
     last_name = StringField('Last Name', validators=[DataRequired(), Length(min=2, max=50)])
-    card_number = StringField('Card Number', validators=[DataRequired(), Length(min=16, max=19, message='Invalid card number length'), Regexp(r'^(\d{4})([\s-])?(\d{4})\2?(\d{4})\2?(\d{4})$')])
-    expiration_date = StringField('Expiration Date', validators=[DataRequired()])
-    cvv = StringField('CVV', validators=[DataRequired(), Length(min=3, max=3)])
+    card_number = StringField('Card Number', validators=[DataRequired(), Length(min=16, max=19, message='Invalid card number length'), Regexp(r'^(\d{4})([\s-])?(\d{4})\2?(\d{4})\2?(\d{4})$', message = "Invalid format. Please use no spaces, hyphens (-) or spaces")])
+    expiration_date = StringField('Expiration Date', validators=[DataRequired(), Regexp(r'^\d{1,2}/\d{2,4}$', message='Invalid format. Please enter the date in the format MM/YYYY.')])
+    cvv = StringField('CVV', validators=[DataRequired(), Regexp(r'^\d{3}$', message= "Invalid CVV. Should be 3 numerical digits")])
     submit = SubmitField('Submit')
+    
+    def validate_expiration_date(form, field):
+        date_str = field.data
+        # Extract month and year from the date string
+        try:
+            month, year = map(int, date_str.split('/'))
+        except ValueError: 
+            raise ValidationError('Invalid date. must be numerical values.')
+        
+        # Check if the month is between 1 and 12
+        if not 1 <= month <= 12:
+            raise ValidationError('Invalid month. Please enter a month between 01 and 12.')
+        
+        # If year is two digits, make 4
+        current_year = datetime.now().year
+        
+        if 10 <= year <= 99:
+            year = int(str(current_year // 100) + str(year))
+        
+        # Check if the date is later than the current date
+        current_date = datetime.now()
+        if year < current_date.year or (year == current_date.year and month < current_date.month):
+            raise ValidationError('Expiration date must be in the future.')
+
 
 @app.route('/')
 def main_page():
