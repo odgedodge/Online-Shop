@@ -166,12 +166,11 @@ def reduce_quantity():
 def checkout_page():
     form = CheckoutForm()
     if form.validate_on_submit():
+        # Clear the cart
+        session.pop('cart', None)
+        session['cart'] = []
         return render_template('checkout_complete.html')
     return render_template('checkout.html', form=form)
-
-@app.route('/process_payment', methods=['POST'])
-def process_payment():
-    return render_template('checkout_complete.html')
 
 def calculate_total_cost(cart, products):
     total_cost = 0
