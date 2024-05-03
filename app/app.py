@@ -23,13 +23,14 @@ class Product(db.Model):
     environmental_description = db.Column(db.String(600))
     
     # in order to display a products details
-    def serialise(self):
+    def serialize(self):
         return {"id": self.id,
                 "name": self.name,
                 "price": self.price,
                 "description": self.description,
                 "image_name": self.image_name,
-                "environmental_impact": self.environmental_impact}
+                "environmental_rating": self.environmental_rating,
+                "environmental_description": self.environmental_description}
 
 class CartForm(FlaskForm):
     cart = IntegerField('Quantity: ', [DataRequired(), NumberRange(min=1)], render_kw={"type": "number", "min": "1"})
@@ -168,7 +169,11 @@ def checkout_page():
 def calculate_total_cost(cart, products):
     total_cost = 0
     for item in cart:
-        total_cost += products[item['product_id']]["price"] * item['quantity']
+        product_id = item['product_id']
+        # Find the product with the matching ID
+        product = next((p for p in products if p.id == product_id), None)
+        if product:
+            total_cost += product.price * item['quantity']
     return total_cost
 
 if __name__ == '__main__':

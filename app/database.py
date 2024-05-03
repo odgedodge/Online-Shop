@@ -1,4 +1,4 @@
-from main import app, db, Product
+from app import app, db, Product
 
 products = [
     { "name": "Singer Sewing Machine M2105", "price": 149.99, "description": "Lightweight, beginner sewing machine with one dial operation and 4 step buttonhole stitching.", "image_filename" : "SingerM1205SewingMachine.jpg", "environmental_rating": "6/10","environmental_description": "Sewing machines have environmental impacts as electronic devices, in that they do use electricity, as well as them adding to e-waste if not disposed of correctly. They are also made of plastics and polymers, so they should be disposed of with the proper care. However, moving to making your own clothes for yourself or friends is far better than participating in fast fashion, as well as being."},
