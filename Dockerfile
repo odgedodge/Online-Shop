@@ -9,10 +9,10 @@ RUN pip install --no-cache-dir --upgrade pip && \
 pip install --no-cache-dir -r ./requirements.txt
 
 # Copy application files for the Flask server into the Docker image
-COPY ./app /usr/src/cm1102-online-shop
+COPY ./app /usr/src/app
 
 # Set the working directory
-WORKDIR /usr/src/cm1102-online-shop
+WORKDIR /usr/src/app
 
 # Set group write permissions on the instance directory 
 # so the running app can modify the sqlite database file in it
@@ -21,7 +21,7 @@ WORKDIR /usr/src/cm1102-online-shop
 #        and makes that user a member of the 'root' group
 # Note2: Any changes to the database will be lost if the container is rerun.
 #        To keep data between different container runs, use a separate persistent database like mysql
-RUN chmod -R g+w /usr/src/cm1102-online-shop/instance
+RUN chmod -R g+w /usr/src/app/instance
 
 # Define the command to run when the container starts
 CMD python app.py
