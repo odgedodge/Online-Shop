@@ -21,7 +21,7 @@ WORKDIR /usr/src/app
 #        and makes that user a member of the 'root' group
 # Note2: Any changes to the database will be lost if the container is rerun.
 #        To keep data between different container runs, use a separate persistent database like mysql
-RUN chmod -R g+w /usr/src/instance
+RUN chmod -R g+w /usr/src/app/instance
 
 # Define the command to run when the container starts
 CMD python app.py
