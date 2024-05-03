@@ -41,7 +41,7 @@ class CheckoutForm(FlaskForm):
     last_name = StringField('Last Name', validators=[DataRequired(), Length(min=2, max=50)])
     card_number = StringField('Card Number', validators=[DataRequired(), Length(min=16, max=19, message='Invalid card number length'), Regexp(r'^(\d{4})([\s-])?(\d{4})\2?(\d{4})\2?(\d{4})$', message = "Invalid format. Please use no spaces, hyphens (-) or spaces")])
     expiration_date = StringField('Expiration Date', validators=[DataRequired(), Regexp(r'^\d{1,2}/\d{2,4}$', message='Invalid format. Please enter the date in the format MM/YYYY.')])
-    cvv = StringField('CVV', validators=[DataRequired(), Regexp(r'^\d{3}$', message= "Invalid CVV. Should be 3 numerical digits")])
+    cvc = StringField('CVC', validators=[DataRequired(), Regexp(r'^\d{3}$', message= "Invalid CVC. Should be 3 numerical digits")])
     submit = SubmitField('Submit')
     
     def validate_expiration_date(form, field):
