@@ -172,4 +172,4 @@ def calculate_total_cost(cart, products):
     return total_cost
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0')
