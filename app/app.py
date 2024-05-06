@@ -21,6 +21,7 @@ class Product(db.Model):
     image_name = db.Column(db.String(60))
     environmental_rating = db.Column(db.String(5))
     environmental_description = db.Column(db.String(600))
+    variations = db.relationship('ProductVariation', backref='product', lazy=True)
     
     # in order to display a products details
     def serialize(self):
@@ -31,6 +32,12 @@ class Product(db.Model):
                 "image_name": self.image_name,
                 "environmental_rating": self.environmental_rating,
                 "environmental_description": self.environmental_description}
+
+class ProductVariation(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('products.id'), nullable=False)
+    color = db.Column(db.String(50), nullable=False)
+    image_name = db.Column(db.String(100), nullable=False)
 
 class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
