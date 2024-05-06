@@ -10,14 +10,14 @@ products = [
     { "name": "Rotary Cutter", "price": 6.99, "description": "Rotary cutter (45mm) – Used for cutting fabric flat. Make sure to use with cutting mat", "image_filename": "rotary_cutter.jpg", "environmental_rating": "6/10", "environmental_description": "The materials consist of metal, which is recyclable; however primary material is plastic, poor recyclability but long lifespan. Look to sharpen over disposal. "},
     { "name": "Sewing Needles", "price": 3.99, "description": "30 pieces straight hand sewing needles – assorted sizes", "image_filename": "sewing_needles.jpg", "environmental_rating": "8/10", "environmental_description": "Solely metal, recyclable and disposable with care. Sharp objects – take care. Environmentally friendly"},
     { "name": "Sewing Pins", "price": 8.99, "description": "1200 Straight sewing pins with various colour heads", "image_filename": "sewing_pins.jpg", "environmental_rating": "7/10", "environmental_description": "This contains lots of little metal pieces, so make sure to be careful. Pieces are sharp so ensure to take proper care during disposal. Overall, this is pretty environmentally friendly, as very few people will lose or break amount of pins here, so no need for repurchase and/or frequent reproduction"},
-    { "name": "Sewing Machine Needles", "price": 7.99, "description": "Singer sewing machine needles – 10 pieces. Size 90/14", "image_filename": "sewing_machine_needles.jpg", "environmental_rating": "8/10", "environmental_description": "Metal sewing needles, recyclable. Take care in disposal, as they are sharp, especially when broken"},
+    { "name": "Sewing Machine Needles", "price": 7.99, "description": "Singer sewing machine needles – 10 pieces. Size 90/14", "image_filename": "singer_machine_needles.jpg", "environmental_rating": "8/10", "environmental_description": "Metal sewing needles, recyclable. Take care in disposal, as they are sharp, especially when broken"},
     { "name": "Tailor's Chalk", "price": 4.49, "description": "Tailors chalk for marking fabric – 4 pieces, white, yellow, red and blue", "image_filename": "tailors_chalk.jpg", "environmental_rating": "8/10", "environmental_description": "Chalk, biodegradable, however, uses large amounts of water during production. Overall, mostly environmentally friendly"}
 ]
 
 
 with app.app_context():
-    ## Currently a bug where cannot run the program using a db created in database file: must fix.
     with app.app_context():
+        db.drop_all()
         db.create_all()
         
         # enumerate to manually set indexes to index at 0
