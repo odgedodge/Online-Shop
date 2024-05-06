@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, jsonify, request, session
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, IntegerField
+from wtforms import StringField, SubmitField, IntegerField, TextAreaField
 from wtforms.validators import DataRequired, Length, NumberRange, ValidationError, Regexp
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
@@ -75,6 +75,12 @@ class CheckoutForm(FlaskForm):
         if year < current_date.year or (year == current_date.year and month < current_date.month):
             raise ValidationError('Expiration date must be in the future.')
 
+class ReviewForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired(), Length(min=2, max=100)])
+    customer_name = StringField('Name', validators=[DataRequired(), Length(min=2, max=100)])
+    comment = TextAreaField('Comment', validators=[DataRequired(), Length(min=10)])
+    rating = IntegerField('Rating', validators=[DataRequired(), NumberRange(min=1, max=5)])
+    submit = SubmitField('Submit Review')
 
 @app.route('/')
 def main_page():
@@ -109,10 +115,14 @@ def single_product_page(product_id):
     product = Product.query.get_or_404(product_id)
     reviews = Review.query.filter_by(product_id=product_id).all()
     
-    form = CartForm()
+    cart_form = CartForm()
+    review_form = ReviewForm()
     
-    if form.validate_on_submit():
-        quantity = form.cart.data
+    if review_form.validate_on_submit():
+        submit_review(product_id)
+    
+    if cart_form.validate_on_submit():
+        quantity = cart_form.cart.data
         
         item_in_cart = False
         for item in session['cart']:
@@ -125,7 +135,7 @@ def single_product_page(product_id):
         # Explicitly update the session object
         session.modified = True
         return render_template('single_product_confirmation.html', product=product, quantity=quantity, reviews=reviews)
-    return render_template('single_product.html', product=product, form=form)
+    return render_template('single_product.html', product=product, cart_form=cart_form, review_form=review_form)
     
 @app.route('/cart')
 def cart_page():
@@ -204,7 +214,7 @@ def calculate_total_cost(cart, products):
         product = next((p for p in products if p.id == product_id), None)
         if product:
             total_cost += product.price * item['quantity']
-    return total_cost
+    return round(total_cost, 2)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

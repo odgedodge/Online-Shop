@@ -6,9 +6,27 @@
     <p>{{ product.description }}</p>
     <p>Environmental Rating: {{ product.environmental_rating }}</p>
     <p>{{ product.environmental_description }}</p>
-    <img src="{{url_for('static', filename= product.image_name ) }}" alt= "{{ product.name }}" width="400" class="item-img"/>
-    <div class="col-md-3">
-        {{ wtf.quick_form(form) }}
 
+    <!-- Add button to view reviews -->
+    <form action="{{ url_for('view_reviews', product_id=product.id) }}" method="get">
+        <button type="submit" class="submit-btn">View Reviews</button>
+    </form>
+
+    <img src="{{url_for('static', filename= product.image_name ) }}" alt= "{{ product.name }}" width="400" class="item-img"/>
+
+    <div>
+        <form action="{{ url_for('single_product_page', product_id=product.id) }}" method="POST">
+            {{ cart_form.csrf_token }}
+            <input type="number" name="cart" value="1" min="1">
+            <button type="submit" class="submit-btn">Add to Cart</button>
+        </form>
+    </div>
+
+    <!-- Review Form -->
+    <div>
+        <h2>Leave a Review</h2>
+        <form class="checkout-form" method="post">
+            {{ wtf.quick_form(review_form) }}
+        
     </div>
 {% endblock %}
