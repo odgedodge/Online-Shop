@@ -10,7 +10,7 @@
         </form>
     </div>
     <div id="description-container"></div> 
-    <ul>
+    <div class="row">
         {% for product in products %}
             <li class="product">
                 <a href="{{ url_for('single_product_page', product_id = product.id)}}" class="product-link" data-product-id="{{ product.id }}">
@@ -30,7 +30,8 @@
                 </form>
             </li>
         {% endfor %}
-    </ul>
+    </div>
+    
     
     
     <script>

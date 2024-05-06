@@ -113,7 +113,8 @@ a:hover {
     display: flex;
     flex-direction: column;
     align-items: left;
-    margin-bottom: 20px;
+    width: calc(100% - 20px); /* Ensure each item takes up the correct width */
+    margin: 10px; /* Add margin between items */
     padding: 20px;
     background-color: #FFFFFF;
     border-radius: 10px;
@@ -136,6 +137,13 @@ a:hover {
 
 .product-info p {
     color: #BC6C25;
+}
+
+/* Ensure the grid items are displayed horizontally */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
 /* Cart styling */
