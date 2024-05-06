@@ -74,6 +74,8 @@ a:hover {
 .sort-options {
     margin-left: 1.5vw;
     padding: .75vw .25vw;
+    display: flex;
+    gap: .3vw;
 }
 
 .sort-btn {
@@ -88,6 +90,43 @@ a:hover {
 
 .sort-btn:hover {
     background-color: #DDA15E;
+}
+
+.sort-search-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1vw;
+}
+
+.search-form {
+    display: flex;
+    align-items: center;
+}
+
+.search-form input[type="text"],
+.search-form button {
+    font-family: "Candara", serif;
+    height: 2vw;
+    padding: .3vw .5vw;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.search-form input[type="text"] {
+    flex: 1;
+    margin-right: .25vw;
+}
+
+.search-form button {
+    background-color: #445128;
+    color: white;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+}
+
+.search-form button:hover {
+    background-color: #364420;
 }
 
 /* Product card styling */
@@ -250,14 +289,12 @@ a:hover {
     background-color: #DDA15E;
 }
 
-/* Style for reviews container */
 .review-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Adjust column width as needed */
     grid-gap: 20px; /* Adjust the gap between grid items */
 }
 
-/* Style for each review */
 .review {
     padding: 20px;
     background-color: #FFFFFF;
@@ -265,18 +302,15 @@ a:hover {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Style for review text */
 .review p {
     margin-bottom: 10px;
 }
 
-/* Style for review author */
 .review .customer-name {
     font-style: italic;
     color: #888888;
 }
 
-/* Style for review rating */
 .review .rating {
     font-weight: bold;
     color: #BC6C25;

@@ -205,6 +205,13 @@ def view_reviews(product_id):
     
     return render_template('reviews.html', product=product, reviews=reviews)
 
+@app.route('/search')
+def search_results():
+    form = CartForm()
+    query = request.args.get('query')
+    results = Product.query.filter(Product.name.ilike(f'%{query}%')).all()
+    return render_template('search_results.html', query=query, results=results, form=form)
+
 def calculate_total_cost(cart, products):
     total_cost = 0
     for item in cart:
