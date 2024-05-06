@@ -32,6 +32,14 @@ class Product(db.Model):
                 "environmental_rating": self.environmental_rating,
                 "environmental_description": self.environmental_description}
 
+class Review(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('products.id'), nullable=False)
+    customer_name = db.Column(db.String(100), nullable=False)
+    rating = db.Column(db.Integer, nullable=False)
+    title = db.Column(db.Text)
+    comment = db.Column(db.Text)
+
 class CartForm(FlaskForm):
     cart = IntegerField('Quantity: ', [DataRequired(), NumberRange(min=1)], render_kw={"type": "number", "min": "1"})
     submit = SubmitField('Add to Cart')
@@ -99,6 +107,7 @@ def get_description(product_id):
 @app.route('/product/<int:product_id>', methods=['GET','POST'])
 def single_product_page(product_id):
     product = Product.query.get_or_404(product_id)
+    reviews = Review.query.filter_by(product_id=product_id).all()
     
     form = CartForm()
     
@@ -115,7 +124,7 @@ def single_product_page(product_id):
             session['cart'].append({"product_id": product_id, "quantity": quantity})
         # Explicitly update the session object
         session.modified = True
-        return render_template('single_product_confirmation.html', product=product, quantity=quantity)
+        return render_template('single_product_confirmation.html', product=product, quantity=quantity, reviews=reviews)
     return render_template('single_product.html', product=product, form=form)
     
 @app.route('/cart')
@@ -165,6 +174,27 @@ def checkout_page():
         session['cart'] = []
         return render_template('checkout_complete.html')
     return render_template('checkout.html', form=form)
+
+@app.route('/submit_review/<int:product_id>', methods=['POST'])
+def submit_review(product_id):
+    customer_name = request.form['customer_name']
+    title = request.form["title"]
+    rating = int(request.form['rating'])
+    comment = request.form['comment']
+    review = Review(product_id=product_id, customer_name=customer_name, title=title, rating=rating, comment=comment)
+    db.session.add(review)
+    db.session.commit()
+    return redirect(url_for('single_product_page', product_id=product_id))
+
+@app.route('/product/<int:product_id>/reviews')
+def view_reviews(product_id):
+    # Fetch the product from the database
+    product = Product.query.get_or_404(product_id)
+    
+    # Fetch reviews related to the product
+    reviews = Review.query.filter_by(product_id=product_id).all()
+    
+    return render_template('reviews.html', product=product, reviews=reviews)
 
 def calculate_total_cost(cart, products):
     total_cost = 0
