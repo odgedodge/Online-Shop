@@ -132,7 +132,7 @@ a:hover {
 /* Product card styling */
 .product {
     display: inline-block; 
-    width: calc(25% - 1vw);
+    width: calc(25% - 2vw);
     margin: .6vw; 
     padding: 1.2vw;
     background-color: #FFFFFF;
@@ -166,7 +166,8 @@ a:hover {
 
 .row {
     display: flex;
-    justify-content: space-between; /* Align items with space between them */
+    flex-wrap: wrap;
+    justify-content: center; /* Align items with space between them */
 }
 
 #description-container {
