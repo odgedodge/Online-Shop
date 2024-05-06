@@ -4,12 +4,8 @@ body {
     font-family: "Candara", serif;
     background-color: #FEFAE0;
     color: #2D2A2C;
-    font-size: 150%;
-    padding: 15px;
-}
-
-ul {
-    list-style: none; /* Remove bullet points */
+    font-size: .875vw;
+    padding: 1.25vw;
 }
 
 a {
@@ -39,7 +35,7 @@ a:hover {
 
 /* Header styling */
 .header {
-    padding: 20px;
+    padding: 1.2vw;
     text-align: left;
 }
 
@@ -49,21 +45,21 @@ a:hover {
     justify-content: left; 
     align-items: center;
     background-color: #606C38;
-    padding: 10px 20px;
-    border-radius: 10px;
+    padding: .6vw 1vw;
+    border-radius: 1vw;
 }
 
 .navbar-items {
     display: flex;
-    justify-content: center; /* Center navbar items horizontally */
-    align-items: center; /* Center items vertically within the navbar */
+    justify-content: center; 
+    align-items: center; 
 }
 
 .nav-link {
     color: #FEFAE0; /* Text color for navbar links */
     text-decoration: none;
     font-family: "Candara", sans-serif;
-    padding: 10px 15px; /* Adjust padding as needed */
+    padding: .6vw .75vw; /* Adjust padding as needed */
 }
 
 .nav-link:hover {
@@ -74,15 +70,15 @@ a:hover {
 
 /* Main page styling */
 .sort-options {
-    margin-left: 30px;
-    padding: 15px 5px;
+    margin-left: 1.5vw;
+    padding: .75vw .25vw;
 }
 
 .sort-btn {
     background-color: #606C38;
     color: #FEFAE0;
     border: none;
-    padding: 10px 20px;
+    padding: .6vw 1vw;
     cursor: pointer;
     border-radius: 5px;
     margin: 5px; 
@@ -95,19 +91,18 @@ a:hover {
 /* Product card styling */
 .product {
     display: inline-block; 
-    width: calc(25% - 20px);
-    margin: 10px; 
-    padding: 20px;
+    width: calc(25% - 1vw);
+    margin: .6vw; 
+    padding: 1.2vw;
     background-color: #FFFFFF;
-    border-radius: 10px;
+    border-radius: .6vw;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     text-align: center; /* Center product content */
 }
 
 .product img {
     max-width: 100%;
-    max-height: 300px;
-    border-radius: 10px;
+    max-height: 20vw;
 }
 
 .product-info {
@@ -115,7 +110,7 @@ a:hover {
 }
 
 .product-info h3 {
-    margin-top: 10px;
+    margin-top: .6vw;
     color: #FEFAE0;
 }
 
@@ -128,10 +123,8 @@ a:hover {
     margin: auto;
 }
 
-/* Ensure the grid items are displayed horizontally */
 .row {
     display: flex;
-    flex-wrap: wrap; /* Allow items to wrap */
     justify-content: space-between; /* Align items with space between them */
 }
 
@@ -140,18 +133,18 @@ a:hover {
     position: absolute;
     background-color: #FEFAE0;
     border: 1px solid black;
-    padding: 20px;
+    padding: 1vw;
     z-index: 9999; /* Appears above other content */
-    border-radius: 10px;
+    border-radius: .6vw;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
 
 /* Cart styling */
 .cart-item {
-    padding: 10px;
+    padding: .6vw;
     background-color: #Ffffff;
-    margin: 5px;
+    margin: .25vw;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
@@ -161,7 +154,7 @@ a:hover {
 }
 
 .cart-item p {
-    margin: 5px 0;
+    margin: .23vw 0;
 }
 
 .cart-total {
@@ -172,10 +165,10 @@ a:hover {
     background-color: #606C38;
     color: #FEFAE0;
     border: none;
-    padding: 7px 14px;
+    padding: .25vw .3vw;
     cursor: pointer;
     border-radius: 5px;
-    margin: 5px;
+    margin: .2vw;
 }
 
 .cart-button:hover {
@@ -186,20 +179,20 @@ a:hover {
     background-color: #C03221;
     color: #FEFAE0;
     border: none;
-    padding: 7px;
+    padding: .25vw;
     border-radius: 5px;
-    margin: 5px;
+    margin: .2vw;
 }
 
 .cart-buttons {
     display: flex;
-    margin: 10px;
+    margin: .6vw;
 }
 
 /* Checkout form styling */
 .checkout-form {
     background-color: #FEFAE0;
-    padding: 20px;
+    padding: 1vw;
     border-radius: 10px;
 
 }
@@ -207,8 +200,8 @@ a:hover {
 .checkout-form input[type="text"],
 .checkout-form input[type="number"] {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
+    padding: .6vw;
+    margin-bottom: .6pw;
     border: 1px solid #DDA15E;
     border-radius: 5px;
 }
@@ -217,7 +210,7 @@ a:hover {
     background-color: #BC6C25;
     color: #FEFAE0;
     border: 1px solid #2D2A2C;
-    padding: 7px 14px;
+    padding: .25vw .3vw;
     border-radius: 5px;
     cursor: pointer;
 }
@@ -229,7 +222,7 @@ a:hover {
 /* Footer styling */
 .footer {
     background-color: #606C38;
-    padding: 20px;
+    padding: 1vw;
     text-align: center;
     color: #FEFAE0;
 }
