@@ -94,9 +94,9 @@ a:hover {
 
 /* Product card styling */
 .product {
-    display: inline-block; /* Change from flex to inline-block */
-    width: calc(25% - 20px); /* Adjust width */
-    margin: 10px; /* Add margin between items */
+    display: inline-block; 
+    width: calc(25% - 20px);
+    margin: 10px; 
     padding: 20px;
     background-color: #FFFFFF;
     border-radius: 10px;
@@ -106,6 +106,7 @@ a:hover {
 
 .product img {
     max-width: 100%;
+    max-height: 300px;
     border-radius: 10px;
 }
 

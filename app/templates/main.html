@@ -15,7 +15,7 @@
             {% for product in products %}
                 <div class="product">
                     <a href="{{ url_for('single_product_page', product_id = product.id)}}" class="product-link" data-product-id="{{ product.id }}">
-                        <img src="{{ url_for('static', filename= product.image_name ) }}" alt="{{ product.name }}" width="300"/>
+                        <img src="{{ url_for('static', filename= product.image_name ) }}" alt="{{ product.name }}"/>
                     </a>
                     <div class="product-info">
                         <h3><a href="{{ url_for('single_product_page', product_id=product.id)}}" class="product-link" data-product-id="{{ product.id }}">{{ product.name }}</a></h3>
