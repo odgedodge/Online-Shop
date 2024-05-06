@@ -4,7 +4,7 @@ body {
     font-family: "Candara", serif;
     background-color: #FEFAE0;
     color: #2D2A2C;
-    font-size: .875vw;
+    font-size: 150%;
     padding: 1.25vw;
 }
 
@@ -13,7 +13,9 @@ a {
 }
 
 .item-img {
-    padding: 20px;
+    width: 18vw;
+    padding: 1vw;
+    float: right;
     border-radius: 10px;
     background-color: #FFFFFF;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
@@ -194,7 +196,6 @@ a:hover {
     background-color: #FEFAE0;
     padding: 1vw;
     border-radius: 10px;
-
 }
 
 .checkout-form input[type="text"],
@@ -222,33 +223,63 @@ a:hover {
 /* Review form styling */
 
 .review-form {
-    margin-top: 20px;
+    background-color: #FEFAE0;
+    border-radius: 10px;
+    width: 40%;
 }
 
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-
-.form-group label {
-    font-weight: bold;
-}
-
-
-.form-control {
+.review-form input, textarea {
     width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
+    padding: .6vw;
+    margin: .2vw;
+    border: 1px solid #DDA15E;
     border-radius: 5px;
 }
 
-/* Footer styling */
-.footer {
-    background-color: #606C38;
-    padding: 1vw;
-    text-align: center;
+.review-form input[type="submit"] {
+    background-color: #BC6C25;
     color: #FEFAE0;
+    border: 1px solid #2D2A2C;
+    padding: .25vw .3vw;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 25%
 }
+
+.review-form input[type="submit"]:hover {
+    background-color: #DDA15E;
+}
+
+/* Style for reviews container */
+.review-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Adjust column width as needed */
+    grid-gap: 20px; /* Adjust the gap between grid items */
+}
+
+/* Style for each review */
+.review {
+    padding: 20px;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for review text */
+.review p {
+    margin-bottom: 10px;
+}
+
+/* Style for review author */
+.review .customer-name {
+    font-style: italic;
+    color: #888888;
+}
+
+/* Style for review rating */
+.review .rating {
+    font-weight: bold;
+    color: #BC6C25;
+}
+
 

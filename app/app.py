@@ -113,7 +113,6 @@ def get_description(product_id):
 @app.route('/product/<int:product_id>', methods=['GET','POST'])
 def single_product_page(product_id):
     product = Product.query.get_or_404(product_id)
-    reviews = Review.query.filter_by(product_id=product_id).all()
     
     cart_form = CartForm()
     review_form = ReviewForm()
@@ -134,7 +133,7 @@ def single_product_page(product_id):
             session['cart'].append({"product_id": product_id, "quantity": quantity})
         # Explicitly update the session object
         session.modified = True
-        return render_template('single_product_confirmation.html', product=product, quantity=quantity, reviews=reviews)
+        return render_template('single_product_confirmation.html', product=product, quantity=quantity)
     return render_template('single_product.html', product=product, cart_form=cart_form, review_form=review_form)
     
 @app.route('/cart')

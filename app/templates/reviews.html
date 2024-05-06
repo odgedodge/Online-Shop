@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Reviews for {{ product.name }}</h1>
+
+    {% if reviews %}
+    <div class="container">
+        <div class="review-container">
+            {% for review in reviews %}
+                <div class="review">
+                    <p>{{ review.comment }}</p>
+                    <p class="customer-name">- {{ review.customer_name }}</p>
+                    <p class="rating">Rating: {{ review.rating }}/5</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% else %}
+        <p>No reviews available for this product.</p>
+    {% endif %}
+{% endblock %}
