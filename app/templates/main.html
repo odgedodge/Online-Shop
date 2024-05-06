@@ -9,27 +9,28 @@
             
         </form>
     </div>
-    <div id="description-container"></div> 
-    <div class="row">
-        {% for product in products %}
-            <li class="product">
-                <a href="{{ url_for('single_product_page', product_id = product.id)}}" class="product-link" data-product-id="{{ product.id }}">
-                    <img src="{{ url_for('static', filename= product.image_name ) }}" alt="{{ product.name }}" width="300"/>
-                </a>
-                <div class="product-info">
-                    <h3><a href="{{ url_for('single_product_page', product_id=product.id)}}" class="product-link" data-product-id="{{ product.id }}">{{ product.name }}</a></h3>
-                    <p class="product-price">Price: £{{ product.price }}</p>
-                    <p> Environmental Rating: {{product.environmental_rating}}</p>
+    <div class="container">
+        <div class="row">
+            {% for product in products %}
+                <div class="product">
+                    <a href="{{ url_for('single_product_page', product_id = product.id)}}" class="product-link" data-product-id="{{ product.id }}">
+                        <img src="{{ url_for('static', filename= product.image_name ) }}" alt="{{ product.name }}" width="300"/>
+                    </a>
+                    <div class="product-info">
+                        <h3><a href="{{ url_for('single_product_page', product_id=product.id)}}" class="product-link" data-product-id="{{ product.id }}">{{ product.name }}</a></h3>
+                        <p class="product-price">Price: £{{ product.price }}</p>
+                        <p> Environmental Rating: {{product.environmental_rating}}</p>
+                    </div>
+
+
+                    <form action="{{ url_for('single_product_page', product_id=product.id) }}" method="POST">
+                        {{ form.csrf_token }}
+                        <input type="number" name="cart" value="1" min="1">
+                        <button type="submit" class="submit-btn">Add to Cart</button>
+                    </form>
                 </div>
-
-
-                <form action="{{ url_for('single_product_page', product_id=product.id) }}" method="POST">
-                    {{ form.csrf_token }}
-                    <input type="number" name="cart" value="1" min="1">
-                    <button type="submit" class="submit-btn">Add to Cart</button>
-                </form>
-            </li>
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
     
     

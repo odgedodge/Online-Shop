@@ -27,11 +27,6 @@ a:hover {
     color: #606C38;
 }
 
-.container {
-    width: 90%;
-    margin: auto;
-}
-
 .submit-btn {
     background-color: #BC6C25;
     color: #FEFAE0;
@@ -97,28 +92,16 @@ a:hover {
     background-color: #DDA15E;
 }
 
-#description-container {
-    visibility: hidden;
-    position: absolute;
-    background-color: #FEFAE0;
-    border: 1px solid black;
-    padding: 20px;
-    z-index: 9999; /* Appears above other content */
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-}
-
 /* Product card styling */
 .product {
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    width: calc(100% - 20px); /* Ensure each item takes up the correct width */
+    display: inline-block; /* Change from flex to inline-block */
+    width: calc(25% - 20px); /* Adjust width */
     margin: 10px; /* Add margin between items */
     padding: 20px;
     background-color: #FFFFFF;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    text-align: center; /* Center product content */
 }
 
 .product img {
@@ -139,11 +122,16 @@ a:hover {
     color: #BC6C25;
 }
 
+.container {
+    width: 100%;
+    margin: auto;
+}
+
 /* Ensure the grid items are displayed horizontally */
 .row {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    flex-wrap: wrap; /* Allow items to wrap */
+    justify-content: space-between; /* Align items with space between them */
 }
 
 /* Cart styling */
