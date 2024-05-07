@@ -5,10 +5,13 @@ from wtforms.validators import DataRequired, Length, NumberRange, ValidationErro
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+import os
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = "top secret password don't tell anyone this"
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.sqlite3'
+app.config['SECRET_KEY'] = 'top secret!'
+
+basedir = os.path.abspath(os.path.dirname(__file__))
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'instance/data.sqlite3')
 bootstrap = Bootstrap(app)
 db = SQLAlchemy(app)
 
