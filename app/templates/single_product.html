@@ -1,17 +1,32 @@
 {% extends "base.html" %}
 
 {% block content %}
+
     <h1>{{ product.name }}</h1>
-    <img src="{{url_for('static', filename= product.image_name ) }}" alt= "{{ product.name }}" class="item-img"/>
+    <img src="{{url_for('static', filename= product.image_name ) }}" alt= "{{ product.name }}" class="item-img" id="product-image" />
     <p>Price: £{{ product.price }}</p>
     <p>{{ product.description }}</p>
     <p>Environmental Rating: {{ product.environmental_rating }}</p>
     <p>{{ product.environmental_description }}</p>
 
     <div>
+        {% for variation in product.variations %}
+            <img src="{{ url_for('static', filename= variation.image_name ) }}" alt="{{ variation.color }}" class="color-icon" data-image="{{ url_for('static', filename=variation.image_name) }}"/>
+        {% endfor %}
+    </div>
+
+    <div>
         <form action="{{ url_for('single_product_page', product_id=product.id) }}" method="POST">
+            {% if product.variations != []%}
+                <select name="variation" id="variation-select" class="cart-input">
+                    <option value="" disabled selected>Select Color</option>
+                    {% for variation in product.variations %}
+                        <option value="{{ variation.id }}">{{ variation.color }}</option>
+                    {% endfor %}
+                </select>
+            {% endif %}
             {{ cart_form.csrf_token }}
-            <input type="number" name="cart" value="1" min="1">
+            <input type="number" class="cart-input" name="cart" value="1" min="1">
             <button type="submit" class="submit-btn">Add to Cart</button>
         </form>
     </div>
@@ -20,10 +35,26 @@
     <div>
          <!-- Add button to view reviews -->
         <form action="{{ url_for('view_reviews', product_id=product.id) }}" method="get">
-            <button type="submit" class="submit-btn">View Reviews</button>
+            <button type="submit" id="add-to-cart-btn" class="submit-btn">View Reviews</button>
         </form>
         <h2>Leave a Review</h2>
         <form class="review-form" method="post">
             {{ wtf.quick_form(review_form, form_type="horizontal") }}
     </div>
+{% endblock %}
+
+{% block scripts %}
+  <script>
+    // Function to change product image when clicking on color icon
+    document.querySelectorAll('.color-icon').forEach(icon => {
+      icon.addEventListener('click', function() {
+        document.getElementById('product-image').src = this.getAttribute('data-image');
+      });
+    });
+
+    // Function to enable Add to Cart button when selecting a color variation
+    document.getElementById('variation-select').addEventListener('change', function() {
+      document.getElementById('add-to-cart-btn').disabled = this.value === '';
+    });
+  </script>
 {% endblock %}
