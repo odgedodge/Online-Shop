@@ -4,6 +4,7 @@
     <h1>Reviews for {{ product.name }}</h1>
 
     {% if reviews %}
+    <!-- Display review title, content, rating and author, or nothing if reviews are unavailable-->
     <div class="container">
         <div class="review-container">
             {% for review in reviews %}

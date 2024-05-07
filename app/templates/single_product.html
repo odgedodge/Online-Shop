@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+    <!-- Display product information-->
     <h1>{{ product.name }}</h1>
     <img src="{{url_for('static', filename= product.image_name ) }}" alt= "{{ product.name }}" class="item-img" id="product-image" />
     <p>Price: £{{ product.price }}</p>
@@ -9,12 +9,14 @@
     <p>Environmental Rating: {{ product.environmental_rating }}</p>
     <p>{{ product.environmental_description }}</p>
 
+    <!-- display variations/colors if applicable-->
     <div>
         {% for variation in product.variations %}
             <img src="{{ url_for('static', filename= variation.image_name ) }}" alt="{{ variation.color }}" class="color-icon" data-image="{{ url_for('static', filename=variation.image_name) }}"/>
         {% endfor %}
     </div>
 
+    <!-- add to cart button, with variation selection if applicable-->
     <div>
         <form action="{{ url_for('single_product_page', product_id=product.id) }}" method="POST">
             {% if product.variations != []%}
@@ -31,19 +33,20 @@
         </form>
     </div>
 
-    <!-- Review Form -->
+    <!-- view reviews button and complete review form-->
     <div>
-         <!-- Add button to view reviews -->
         <form action="{{ url_for('view_reviews', product_id=product.id) }}" method="get">
             <button type="submit" id="add-to-cart-btn" class="submit-btn">View Reviews</button>
         </form>
         <h2>Leave a Review</h2>
-        <form class="review-form" method="post">
+        <form id="review-form" class="review-form" method="post" action="/submit_review/{{ product.id }}">
             {{ wtf.quick_form(review_form, form_type="horizontal") }}
     </div>
 {% endblock %}
 
+
 {% block scripts %}
+  <!-- script to allow colors to change when icons clicked -->
   <script>
     // Function to change product image when clicking on color icon
     document.querySelectorAll('.color-icon').forEach(icon => {
@@ -57,4 +60,15 @@
       document.getElementById('add-to-cart-btn').disabled = this.value === '';
     });
   </script>
+
+  <!-- script to remove info from review form when review form is submitted-->
+  <script>
+    // Check if the form was submitted (POST request) and clear the fields
+    document.addEventListener('DOMContentLoaded', function() {
+        if (window.location.href.includes('submit_review')) {
+            document.getElementById('review-form').reset();
+        }
+    });
+</script>
+
 {% endblock %}

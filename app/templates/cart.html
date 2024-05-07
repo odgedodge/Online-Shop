@@ -7,6 +7,7 @@
     <h3 class="header">Products in Cart:</h3>
     {%if cart %}
         <ul>
+            <!-- Output each item in the cart, name, quanitity, color (if applicable), along with removal buttons-->
             {% for item in cart %}
             <li class="cart-item">
                 <strong>{{ item.product.name }}</strong> - £{{ item.product.price }} - Quantity: {{ item.quantity }}
@@ -22,6 +23,7 @@
             </li>
             {% endfor %}
         </ul>
+        <!-- Checkout and clear cart buttons and total cost-->
         <p class="cart-total">Total Cost: £{{ total_cost }}</p>
         <div class="cart-buttons">
             <a href="{{ url_for('checkout_page') }}" class="submit-btn">Checkout</a>

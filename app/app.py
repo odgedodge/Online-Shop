@@ -100,6 +100,7 @@ def main_page():
     
     products = Product.query.all()
     
+    #sorting settings
     if sort_by == 'name':
         products = sorted(products, key=lambda x: x.name)
     elif sort_by == 'price':
@@ -107,6 +108,7 @@ def main_page():
     elif sort_by == 'environmental_rating':
         products = sorted(products, key=lambda x: x.environmental_rating, reverse=True)
     
+    #add to cart from main page
     form = CartForm()
     
     return render_template('main.html', len = len(products), products = products, form = form)
@@ -124,20 +126,16 @@ def single_product_page(product_id):
     cart_form = CartForm()
     review_form = ReviewForm()
     
-    if review_form.validate_on_submit():
-        submit_review(product_id)
-    
+    # return confirmation page when adding to cart
     if cart_form.validate_on_submit():
         quantity = cart_form.cart.data
         
         variation_id = None
         if 'variation' in request.form:
             variation_id = int(request.form['variation'])
-        print("AGH" , variation_id)
         
         item_in_cart = False
         for item in session['cart']:
-            print("BLAH", item.get("variation_id"))
             if item["product_id"] == product_id and item.get("variation_id") == variation_id:
                 item["quantity"] += quantity
                 item_in_cart = True
@@ -147,6 +145,10 @@ def single_product_page(product_id):
         # Explicitly update the session object
         session.modified = True
         return render_template('single_product_confirmation.html', product=product, quantity=quantity)
+    
+    # add a review to database when form completed
+    if review_form.validate_on_submit():
+        submit_review(product_id)
     return render_template('single_product.html', product=product, cart_form=cart_form, review_form=review_form)
     
 @app.route('/cart')
@@ -154,9 +156,9 @@ def cart_page():
     cart = session.get('cart', [])
     total_cost = calculate_total_cost()
     
+    # add differently formatted items to the cart list
     products_in_cart = []
     for item in cart:
-        print(item)
         product_id = item["product_id"]
         product = Product.query.get(product_id)
         if product:
@@ -215,10 +217,10 @@ def submit_review(product_id):
 
 @app.route('/product/<int:product_id>/reviews')
 def view_reviews(product_id):
-    # Fetch the product from the database
+    #fetch the product from the database
     product = Product.query.get_or_404(product_id)
     
-    # Fetch reviews related to the product
+    #fetch reviews related to the product
     reviews = Review.query.filter_by(product_id=product_id).all()
     
     return render_template('reviews.html', product=product, reviews=reviews)

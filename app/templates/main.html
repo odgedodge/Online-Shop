@@ -2,6 +2,7 @@
     
 {% block content %}
 <div class="sort-search-container">
+    <!-- Sort by either name, environmental impact or price-->
     <div class="sort-options">
         <form action="{{ url_for('main_page') }}" method="GET">
             <button type="submit" name="sort_by" value="name" class="sort-btn">Sort by Name</button>
@@ -9,12 +10,15 @@
             <button type="submit" name="sort_by" value="price" class="sort-btn">Sort by Price</button>
         </form>
     </div>
+    <!-- search bar -->
     <form action="{{ url_for('search_results') }}" method="GET" class="search-form">
         <input type="text" name="query" placeholder="Search for items...">
         <button type="submit">Search</button>
     </form>
-</div>   
+</div> 
+    <!-- define description container for AJAX description hover -->
     <div id="description-container"></div>
+    <!-- Display each sellable product, 4 products per row or products centered. Display image, name, price, environmental impact and a button to add to cart -->
     <div class="container">
         <div class="row">
             {% for product in products %}

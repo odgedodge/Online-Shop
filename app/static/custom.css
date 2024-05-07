@@ -173,7 +173,7 @@ a:hover {
 .row {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center; /* Align items with space between them */
+    justify-content: center; 
 }
 
 #description-container {
@@ -315,17 +315,22 @@ a:hover {
     background-color: #DDA15E;
 }
 
-.review-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Adjust column width as needed */
-    grid-gap: 20px; /* Adjust the gap between grid items */
+.reviews-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Adjust alignment as needed */
 }
 
 .review {
-    padding: 20px;
+    display: inline-block;
+    width: calc(33.33% - 2vw);
+    margin-bottom: 1vw; 
+    border: 1px solid #ccc; 
+    padding: 1vw;
     background-color: #FFFFFF;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
 }
 
 .review p {
