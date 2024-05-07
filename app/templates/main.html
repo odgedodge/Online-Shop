@@ -33,6 +33,14 @@
                     </div>
 
                     <form action="{{ url_for('single_product_page', product_id=product.id) }}" method="POST">
+                        {% if product.variations != []%}
+                            <select name="variation" id="variation-select" class="cart-input" required>
+                                <option value="" disabled selected>Select Color</option>
+                                {% for variation in product.variations %}
+                                    <option value="{{ variation.id }}">{{ variation.color|capitalize }}</option>
+                                {% endfor %}
+                            </select>
+                        {% endif %}
                         {{ form.csrf_token }}
                         <input type="number" class="cart-input" name="cart" value="1" min="1">
                         <button type="submit" class="submit-btn">Add to Cart</button>

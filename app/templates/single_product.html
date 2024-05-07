@@ -20,7 +20,7 @@
     <div>
         <form action="{{ url_for('single_product_page', product_id=product.id) }}" method="POST">
             {% if product.variations != []%}
-                <select name="variation" id="variation-select" class="cart-input">
+                <select name="variation" id="variation-select" class="cart-input" required>
                     <option value="" disabled selected>Select Color</option>
                     {% for variation in product.variations %}
                         <option value="{{ variation.id }}">{{ variation.color|capitalize }}</option>
