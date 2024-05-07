@@ -4,7 +4,8 @@
 {% block title %} Checkout {% endblock %}
 
 {% block content %}
-    <h2>Checkout</h2>
+    <h3>Checkout</h3>
+    <h2> Total: £ {{ total }} </h2>
     <form class="checkout-form" method="post">
         {{ wtf.quick_form(form, form_type="horizontal") }}
 {% endblock %}

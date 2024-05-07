@@ -8,6 +8,12 @@ body {
     padding: 1.25vw;
 }
 
+h2 {
+    font-family: "Candara", serif;
+    font-size: 160%;
+    color: #2D2A2C;
+}
+
 a {
     color: #283618;
 }

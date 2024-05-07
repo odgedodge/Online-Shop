@@ -152,15 +152,13 @@ def single_product_page(product_id):
 @app.route('/cart')
 def cart_page():
     cart = session.get('cart', [])
-    products = Product.query.all()
-    total_cost = calculate_total_cost(session['cart'], products)
+    total_cost = calculate_total_cost()
     
     products_in_cart = []
     for item in cart:
         print(item)
         product_id = item["product_id"]
         product = Product.query.get(product_id)
-        variations = product.variations
         if product:
             variation = None
             if "variation_id" in item:
@@ -196,12 +194,13 @@ def reduce_quantity():
 @app.route('/checkout', methods=['GET', 'POST'])
 def checkout_page():
     form = CheckoutForm()
+    total = calculate_total_cost()
     if form.validate_on_submit():
         # Clear the cart
         session.pop('cart', None)
         session['cart'] = []
         return render_template('checkout_complete.html')
-    return render_template('checkout.html', form=form)
+    return render_template('checkout.html', form=form, total=total)
 
 @app.route('/submit_review/<int:product_id>', methods=['POST'])
 def submit_review(product_id):
@@ -231,7 +230,9 @@ def search_results():
     results = Product.query.filter(Product.name.ilike(f'%{query}%')).all()
     return render_template('search_results.html', query=query, results=results, form=form)
 
-def calculate_total_cost(cart, products):
+def calculate_total_cost():
+    cart = session['cart']
+    products = Product.query.all()
     total_cost = 0
     for item in cart:
         product_id = item['product_id']
