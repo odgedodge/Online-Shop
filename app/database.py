@@ -1,5 +1,7 @@
 from app import app, db, Product, ProductVariation, Review
 
+#Blank template: { "name": "", "price": 0, "description": "", "image_filename": "", "environmental_rating": "", "environmental_description": "", "variations": []}
+
 products = [
     { "name": "Singer Sewing Machine M2105", "price": 149.99, "description": "Lightweight, beginner sewing machine with one dial operation and 4 step buttonhole stitching.", "image_filename" : "SingerM1205SewingMachine.jpg", "environmental_rating": "6/10","environmental_description": "Sewing machines have environmental impacts as electronic devices, in that they do use electricity, as well as them adding to e-waste if not disposed of correctly. They are also made of plastics and polymers, so they should be disposed of with the proper care. However, moving to making your own clothes for yourself or friends is far better than participating in fast fashion, as well as being.", "variations": []},
     { "name": "Beginner Sewing Kit", "price": 14.99, "description": "Sewing kit containing 12 different thread colours, 1 needle set, 1 seam ripper, 1 thimble, 1 pair of sewing scissors, 40 pins and 1 sewing cushion.", "image_filename" : "BeginnerSewingKit.jpg", "environmental_rating": "4/10", "environmental_description": "This kit has a lot of little plastic parts and some aspects that may not be used, so it can be environmentally wasteful, so make sure that the aspects of this kit are necessary for your project. Take the proper care to recycling plastic parts. The overall environmental impact is poor due to the large amount of plastic involved.", "variations": []},
@@ -12,15 +14,24 @@ products = [
     { "name": "Sewing Pins", "price": 8.99, "description": "1200 Straight sewing pins with various colour heads", "image_filename": "sewing_pins.jpg", "environmental_rating": "7/10", "environmental_description": "This contains lots of little metal pieces, so make sure to be careful. Pieces are sharp so ensure to take proper care during disposal. Overall, this is pretty environmentally friendly, as very few people will lose or break amount of pins here, so no need for repurchase and/or frequent reproduction", "variations": []},
     { "name": "Sewing Machine Needles", "price": 7.99, "description": "Singer sewing machine needles – 10 pieces. Size 90/14", "image_filename": "singer_machine_needles.jpg", "environmental_rating": "8/10", "environmental_description": "Metal sewing needles, recyclable. Take care in disposal, as they are sharp, especially when broken", "variations": []},
     { "name": "Tailor's Chalk", "price": 4.49, "description": "Tailors chalk for marking fabric – 4 pieces, white, yellow, red and blue", "image_filename": "tailors_chalk.jpg", "environmental_rating": "8/10", "environmental_description": "Chalk, biodegradable, however, uses large amounts of water during production. Overall, mostly environmentally friendly", "variations": []},
-    { "name": "Cotton Fabric", "price": 7.99, "description": "100% Cotton Fabric priced per metre. ", "image_filename": "blue_cotton_fabric.jpg", "environmental_rating": "7/10", "environmental_description": "Cotton fabric has a large water requirement for its making, but if treated correctly will last a long time, and will be more easily reused and last longer than polyester and plastic made fabric. Overall it has a good environmental rating. ", 
+    { "name": "Cotton Fabric", "price": 7.99, "description": "Cotton Fabric priced per metre. Multiple quantities will be cut as one large sheet. 60 inch width. ", "image_filename": "blue_cotton_fabric.jpg", "environmental_rating": "7/10", "environmental_description": "Cotton fabric has a large water requirement for its making, but if treated correctly will last a long time, and will be more easily reused and last longer than polyester and plastic made fabric. Overall it has a good environmental rating. ", 
         "variations": [
             {"color": "white", "image_name": "white_cotton_fabric.jpg"},
             {"color": "black", "image_name": "black_cotton_fabric.jpg"},
             {"color": "blue", "image_name": "blue_cotton_fabric.jpg"},
             {"color": "red", "image_name": "red_cotton_fabric.jpg"},
             {"color": "green", "image_name": "green_cotton_fabric.jpg"}
+        ]},
+    { "name": "Polyester Thread", "price": 4.99, "description": "100% Polyester Gutermann Sew-all Thread, 250m", "image_filename": "blue_thread.webp", "environmental_rating": "8/10", "environmental_description": "Polyester thread is plastic, so it is more difficult to recycle, but the nature of thread makes it environmentally sustainable overall. However, it could contribute to microplastics", 
+        "variations": [
+            {"color": "white", "image_name": "white_thread.webp"},
+            {"color": "black", "image_name": "black_thread.webp"},
+            {"color": "blue", "image_name": "blue_thread.webp"},
+            {"color": "red", "image_name": "red_thread.webp"},
+            {"color": "green", "image_name": "green_thread.webp"}
         ]}
 ]
+
 
 with app.app_context():
     db.create_all()
