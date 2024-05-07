@@ -30,7 +30,7 @@
 
                     <form action="{{ url_for('single_product_page', product_id=product.id) }}" method="POST">
                         {{ form.csrf_token }}
-                        <input type="number" name="cart" value="1" min="1">
+                        <input type="number" class="cart-input" name="cart" value="1" min="1">
                         <button type="submit" class="submit-btn">Add to Cart</button>
                     </form>
                 </div>

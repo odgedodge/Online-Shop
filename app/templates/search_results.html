@@ -3,6 +3,12 @@
 {% block content %}
     {% if results %}
         <h2>Search Results for '{{ query }}'</h2>
+        <div class="sort-search-container">
+            <form action="{{ url_for('search_results') }}" method="GET" class="search-form">
+                <input type="text" name="query" placeholder="Search for items...">
+                <button type="submit">Search</button>
+            </form>
+        </div>  
         <div class="row">
             {% for product in results %}
                 <div class="product">

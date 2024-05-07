@@ -21,7 +21,7 @@
                 <select name="variation" id="variation-select" class="cart-input">
                     <option value="" disabled selected>Select Color</option>
                     {% for variation in product.variations %}
-                        <option value="{{ variation.id }}">{{ variation.color }}</option>
+                        <option value="{{ variation.id }}">{{ variation.color|capitalize }}</option>
                     {% endfor %}
                 </select>
             {% endif %}
