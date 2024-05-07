@@ -10,6 +10,9 @@
             {% for item in cart %}
             <li class="cart-item">
                 <strong>{{ item.product.name }}</strong> - £{{ item.product.price }} - Quantity: {{ item.quantity }}
+                {% if item["variation"]%}
+                    <span style="text-transform: capitalize;"> - Color: {{item.variation.color}} </span>
+                {% endif%}
                 <form action="{{ url_for('remove_from_cart') }}" method="POST">
                     <button type="submit" name="product_id" class="cart-button" value="{{ loop.index0 }}" style="background-color: #445128; border: 1px solid #2D2A2C;">Remove</button>
                 </form>

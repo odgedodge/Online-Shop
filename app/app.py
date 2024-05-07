@@ -130,14 +130,20 @@ def single_product_page(product_id):
     if cart_form.validate_on_submit():
         quantity = cart_form.cart.data
         
+        variation_id = None
+        if 'variation' in request.form:
+            variation_id = int(request.form['variation'])
+        print("AGH" , variation_id)
+        
         item_in_cart = False
         for item in session['cart']:
-            if item["product_id"] == product_id:
+            print("BLAH", item.get("variation_id"))
+            if item["product_id"] == product_id and item.get("variation_id") == variation_id:
                 item["quantity"] += quantity
                 item_in_cart = True
                 break
         if not item_in_cart:
-            session['cart'].append({"product_id": product_id, "quantity": quantity})
+            session['cart'].append({"product_id": product_id, "quantity": quantity, "variation_id": variation_id})
         # Explicitly update the session object
         session.modified = True
         return render_template('single_product_confirmation.html', product=product, quantity=quantity)
@@ -151,10 +157,16 @@ def cart_page():
     
     products_in_cart = []
     for item in cart:
+        print(item)
         product_id = item["product_id"]
         product = Product.query.get(product_id)
+        variations = product.variations
         if product:
-            products_in_cart.append({"product": product, "quantity": item["quantity"]})
+            variation = None
+            if "variation_id" in item:
+                variation_id = item["variation_id"]
+                variation = ProductVariation.query.get(variation_id)
+            products_in_cart.append({"product": product, "quantity": item["quantity"], "variation": variation})
     return render_template('cart.html', cart=products_in_cart, total_cost = total_cost)
 
 @app.route('/clear_cart', methods=['POST'])
